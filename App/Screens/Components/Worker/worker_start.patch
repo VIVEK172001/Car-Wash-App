@@ -1,0 +1,114 @@
+diff --git a/App/Routes/AppRoutes.tsx b/App/Routes/AppRoutes.tsx
+index c1d7afc..f69ab93 100644
+--- a/App/Routes/AppRoutes.tsx
++++ b/App/Routes/AppRoutes.tsx
+@@ -1,11 +1,13 @@
+ import InitialScreen from '@Components/Initial';
+ import Login from '@Components/Login/Login';
+-import { AppTab } from '@Routes/AppTab';
++import {AppTab} from '@Routes/AppTab';
++import Worker from '@Components/Worker/Worker';
+ 
+ enum Route {
+   Initial = 'InitialScreen',
+   LoginScreen = 'Login',
+   HomeScreen = 'Home',
++  WorkerScreen = 'Worker',
+ }
+ 
+ const Routes = [
+@@ -30,6 +32,13 @@ const Routes = [
+       headerShown: false,
+     },
+   },
++  {
++    name: Route.WorkerScreen,
++    screen: Worker,
++    navigationOptions: {
++      headerShown: false,
++    },
++  },
+ ];
+ 
+-export { Routes, Route };
++export {Routes, Route};
+diff --git a/App/Screens/Components/Initial.tsx b/App/Screens/Components/Initial.tsx
+index 99bde06..08d5a67 100644
+--- a/App/Screens/Components/Initial.tsx
++++ b/App/Screens/Components/Initial.tsx
+@@ -1,8 +1,8 @@
+-import React, { useEffect } from 'react';
+-import { View } from 'react-native';
+-import { useNavigation, CommonActions } from '@react-navigation/native';
+-import { isLoggedIn } from '@Services/UserService';
+-import { Route } from '@Routes/AppRoutes';
++import React, {useEffect} from 'react';
++import {View} from 'react-native';
++import {useNavigation, CommonActions} from '@react-navigation/native';
++import {isLoggedIn} from '@Services/UserService';
++import {Route} from '@Routes/AppRoutes';
+ 
+ const Initial = () => {
+   const navigation = useNavigation();
+@@ -18,14 +18,14 @@ const Initial = () => {
+       goToNextScreen(Route.LoginScreen);
+       return;
+     }
+-    goToNextScreen(Route.HomeScreen);
++    goToNextScreen(Route.WorkerScreen);
+   };
+ 
+   const goToNextScreen = async (nextScreen: string) => {
+     navigation.dispatch(
+       CommonActions.reset({
+         index: 0,
+-        routes: [{ name: nextScreen }],
++        routes: [{name: nextScreen}],
+       }),
+     );
+   };
+diff --git a/android/gradlew b/android/gradlew
+old mode 100644
+new mode 100755
+diff --git a/package.json b/package.json
+index 232132b..1c35e5a 100644
+--- a/package.json
++++ b/package.json
+@@ -38,7 +38,7 @@
+     "@react-native-community/eslint-config": "^3.0.2",
+     "@types/jest": "^26.0.23",
+     "@types/lodash": "^4.14.182",
+-    "@types/react": "^18.0.12",
++    "@types/react": "^17.0.2",
+     "@types/react-native": "^0.67.8",
+     "@types/react-test-renderer": "^17.0.1",
+     "@typescript-eslint/eslint-plugin": "^5.17.0",
+diff --git a/yarn.lock b/yarn.lock
+index 0f749a5..265f7c6 100644
+--- a/yarn.lock
++++ b/yarn.lock
+@@ -1587,7 +1587,7 @@
+   dependencies:
+     "@types/react" "^17"
+ 
+-"@types/react@*", "@types/react@^17":
++"@types/react@*", "@types/react@^17", "@types/react@^17.0.2":
+   version "17.0.45"
+   resolved "https://registry.yarnpkg.com/@types/react/-/react-17.0.45.tgz#9b3d5b661fd26365fefef0e766a1c6c30ccf7b3f"
+   integrity sha512-YfhQ22Lah2e3CHPsb93tRwIGNiSwkuz1/blk4e6QrWS0jQzCSNbGLtOEYhPg02W0yGTTmpajp7dCTbBAMN3qsg==
+@@ -1596,15 +1596,6 @@
+     "@types/scheduler" "*"
+     csstype "^3.0.2"
+ 
+-"@types/react@^18.0.12":
+-  version "18.0.12"
+-  resolved "https://registry.yarnpkg.com/@types/react/-/react-18.0.12.tgz#cdaa209d0a542b3fcf69cf31a03976ec4cdd8840"
+-  integrity sha512-duF1OTASSBQtcigUvhuiTB1Ya3OvSy+xORCiEf20H0P0lzx+/KeVsA99U5UjLXSbyo1DRJDlLKqTeM1ngosqtg==
+-  dependencies:
+-    "@types/prop-types" "*"
+-    "@types/scheduler" "*"
+-    csstype "^3.0.2"
+-
+ "@types/scheduler@*":
+   version "0.16.2"
+   resolved "https://registry.yarnpkg.com/@types/scheduler/-/scheduler-0.16.2.tgz#1a62f89525723dde24ba1b01b092bf5df8ad4d39"
